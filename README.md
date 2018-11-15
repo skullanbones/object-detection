@@ -1,6 +1,6 @@
 # Tensorflow object detection
 
-## Start
+## Run Demo
 First clone models:
 ```
 git clone https://github.com/tensorflow/models.git          [1]
@@ -19,12 +19,13 @@ When successfull you will get something like:
 ![](images/tensorflow_jupyter_demo.png)
 
 ## Install NVIDIA docker
-[How to install.](https://github.com/NVIDIA/nvidia-docker)
+Check this [link](https://github.com/NVIDIA/nvidia-docker) on how to install *NVIDIA Container Runtime for Docker*.
+If you don't have docker check this tutorial to install it on [Ubuntu](https://docs.docker.com/install/linux/docker-ce/ubuntu/).
 When successfull this command will run
 ```
 docker run --runtime=nvidia --rm nvidia/cuda:9.0-base nvidia-smi
 ```
-and get something like:
+and give something like:
 ```
 Thu Nov 15 10:20:49 2018       
 +-----------------------------------------------------------------------------+

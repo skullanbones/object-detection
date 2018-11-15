@@ -17,7 +17,7 @@ MAKEFLAGS+="-j $(CORES)"
 $(info MAKEFLAGS= $(MAKEFLAGS))
 
 ## Python
-PYTHON_VERSION ?= 3
+PYTHON_VERSION ?= 2
 
 
 OBJS = $(patsubst %.cc,$(BUILDDIR)/%.o,$(SRCS))
@@ -35,7 +35,7 @@ help:
 	@echo '  docker-image          - builds new docker image with name:tag in Makefile.'
 	@echo '  docker-bash           - starts a docker bash session with settings in makefile.'
 	@echo '  docker-jupyter        - starts a docker bash with jupyter notebooks from tensorflow image.'
-	@echo '  env                   - build python virtual environment for pytest.'
+	@echo '  venv                  - build python virtual environment for tensorflow CPU.'
 	@echo '  clean                 - deletes build content.'
 	@echo '  clean-all             - deletes build content + downloaded 3rd-party.'
 	@echo
@@ -86,9 +86,10 @@ docker-jupyter:
 docker-stop:
 	docker stop  tensorflow-jupyter-notebooks
 
-env:
+venv:
 	virtualenv -p python$(PYTHON_VERSION) $@
-	./env/bin/pip install -r requirements.txt
+	./venv/bin/pip install -r requirements_cpu.txt
+	source ./venv/bin/activate
 
 clean:
 	rm -rf env/
