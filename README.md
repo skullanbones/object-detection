@@ -3,7 +3,7 @@
 ## Start
 First clone models:
 ```
-git clone https://github.com/tensorflow/models.git
+git clone https://github.com/tensorflow/models.git          [1]
 ```
 in this folder which is mounted into docker when running the tensorflow GPU container by:
 ```
@@ -42,4 +42,19 @@ Thu Nov 15 10:20:49 2018
 |  GPU       PID   Type   Process name                             Usage      |
 |=============================================================================|
 +-----------------------------------------------------------------------------+
+```
+
+## Specialized images
+In order to do GPU accelerated calculations based on the NVIDIA cuDNN and tensorflow
+use the image `heliconwave/object-detection`. You can build it via:
+```
+make docker-image
+```
+To enter bash type:
+```
+make docker-bash
+```
+If you are running object-detection API from `[1]` you need run this command before outside the docker container:
+```
+protoc object_detection/protos/*.proto --python_out=.
 ```

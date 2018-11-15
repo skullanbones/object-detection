@@ -74,9 +74,9 @@ RUN export LC_ALL="en_US.UTF-8"
 RUN export LC_CTYPE="en_US.UTF-8"
 
 # Entrypoint
-#COPY ./entrypoint.sh /usr/local/bin/entrypoint.sh
+COPY ./entrypoint.sh /usr/local/bin/entrypoint.sh
 
-#ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 
 # Start up jupyter notebooks
 #CMD ["/run_jupyter.sh", "--allow-root"]
