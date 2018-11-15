@@ -58,3 +58,8 @@ If you are running object-detection API from `[1]` you need run this command bef
 ```
 protoc object_detection/protos/*.proto --python_out=.
 ```
+To be able to run X-server applications like opencv uses you need to type on your host OS:
+```
+xhost +local:docker
+```
+where docker is the user for your docker deamon, which should not be root following best practise. 
