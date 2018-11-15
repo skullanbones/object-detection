@@ -2,9 +2,9 @@
 
 echo "from entrypoint"
 
-unzip /notebook/workdir/protoc-3.2.0-linux-x86_64.zip  -d protoc3
-cp /notebooks/workdir/protoc3/bin/* /usr/local/bin/
-cp /notebooks/workdir/protoc3/include/* /usr/local/include/
+unzip /notebook/workdir/3rd-party/protoc-3.2.0-linux-x86_64.zip  -d protoc3
+cp /notebooks/workdir/3rd-party/protoc3/bin/* /usr/local/bin/
+cp /notebooks/workdir/3rd-party/protoc3/include/* /usr/local/include/
 
 protoc --version
 

@@ -14,6 +14,9 @@ the demo example:
 ```
 object_detection_tutorial.ipynb
 ```
+When successfull you will get something like:
+
+![](tensorflow_jupyter_demo.png)
 
 ## Install NVIDIA docker
 [How to install.](https://github.com/NVIDIA/nvidia-docker)
