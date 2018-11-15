@@ -12,8 +12,8 @@ cd /notebooks/workdir/models/research
 protoc object_detection/protos/*.proto --python_out=.
 echo "export PYTHONPATH=${PYTHONPATH}:`pwd`:`pwd`/slim" >> ~/.bashrc
 
-# Startup jupyter
-jupyter notebook --allow-root
-
 # Change directory
 cd /notebooks/workdir/models/research/object_detection
+
+# Startup jupyter
+jupyter notebook --allow-root

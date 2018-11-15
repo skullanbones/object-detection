@@ -76,7 +76,7 @@ docker-jupyter:
 		--publish 8888:8888 \
 		--volume=$$(pwd):/notebooks/workdir \
 		--entrypoint /notebooks/workdir/entrypoint.sh \
-		--name tensorflow-jupyter-notebooks
+		--name tensorflow-jupyter-notebooks \
 		tensorflow/tensorflow:nightly-gpu	
 
 docker-stop:
