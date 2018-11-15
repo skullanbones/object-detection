@@ -68,6 +68,8 @@ docker-bash:
 		--volume=$$(pwd):/tmp \
 		--tty=true \
 		--env LOCAL_USER_ID=`id -u ${USER}` \
+		--volume /tmp/.X11-unix:/tmp/.X11-unix:ro \
+		--env DISPLAY=unix$$DISPLAY \
 		$(DOCKER_IMAGE_NAME):$(DOCKER_IMAGE_VER) /bin/bash
 
 
