@@ -61,9 +61,11 @@ docker-image:
 # start tty session inside docker container
 docker-bash:
 	docker run \
+		--runtime=nvidia \
 		--rm \
 		--interactive \
 		--publish 8888:8888 \
+		--volume=$$(pwd):/tmp \
 		--tty=true \
 		--env LOCAL_USER_ID=`id -u ${USER}` \
 		$(DOCKER_IMAGE_NAME):$(DOCKER_IMAGE_VER) /bin/bash
@@ -77,7 +79,7 @@ docker-jupyter:
 		--volume=$$(pwd):/notebooks/workdir \
 		--entrypoint /notebooks/workdir/entrypoint.sh \
 		--name tensorflow-jupyter-notebooks \
-		tensorflow/tensorflow:nightly-gpu	
+		tensorflow/tensorflow:nightly-gpu
 
 docker-stop:
 	docker stop  tensorflow-jupyter-notebooks
