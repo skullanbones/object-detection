@@ -34,7 +34,6 @@ help:
 	@echo '  run                   - run tsparser for bbc_one.ts asset and write elementary streams.'
 	@echo '  docker-image          - builds new docker image with name:tag in Makefile.'
 	@echo '  docker-bash           - starts a docker bash session with settings in makefile.'
-	@echo '  docker-run            - starts a docker bash session with settings in makefile.'
 	@echo '  docker-jupyter        - starts a docker bash with jupyter notebooks from tensorflow image.'
 	@echo '  env                   - build python virtual environment for pytest.'
 	@echo '  clean                 - deletes build content.'
@@ -58,35 +57,17 @@ docker-image:
 		--file=$(DOCKERDIR)/Dockerfile \
 		--tag=$(DOCKER_IMAGE_NAME):$(DOCKER_IMAGE_VER) docker/
 
+
 # start tty session inside docker container
 docker-bash:
 	docker run \
 		--rm \
 		--interactive \
+		--publish 8888:8888 \
 		--tty=true \
 		--env LOCAL_USER_ID=`id -u ${USER}` \
 		$(DOCKER_IMAGE_NAME):$(DOCKER_IMAGE_VER) /bin/bash
-#		--volume=$$(pwd):/workdir \		
 
-docker-run:
-	docker run \
-		--rm \
-		--interactive \
-		--env LOCAL_USER_ID=`id -u ${USER}` \
-		--publish 8888:8888 \
-		--volume=$$(pwd):/workdir \
-		$(DOCKER_IMAGE_NAME):$(DOCKER_IMAGE_VER)
-
-docker-image-od:
-	docker build \
-		--file $(DOCKERDIR)/Dockerfile.sofwerx \
-		-t sofwerx/od:1.5.0-devel-gpu . --no-cache=true
-
-# Didnt work
-#docker-image-tf:
-#	docker build \
-#		--file=Dockerfile.tf \
-#		--tag=heliconwave/tf:v1 .
 
 docker-jupyter:
 	docker run --runtime=nvidia \
@@ -94,22 +75,16 @@ docker-jupyter:
 		--interactive \
 		--publish 8888:8888 \
 		--volume=$$(pwd):/notebooks/workdir \
+		--entrypoint /notebooks/workdir/entrypoint.sh \
+		--name tensorflow-jupyter-notebooks
 		tensorflow/tensorflow:nightly-gpu	
 
-### component tests
-
-# Doesnt work
-#docker-nvidia:
-#	docker run \
-#		--runtime=nvidia \
-#		-it \
-#		-p 8888:8888 \
-#		$(DOCKER_IMAGE_NAME):$(DOCKER_IMAGE_VER)
+docker-stop:
+	docker stop  tensorflow-jupyter-notebooks
 
 env:
 	virtualenv -p python$(PYTHON_VERSION) $@
-	./env/bin/pip install -r component_tests/requirements.txt
-
+	./env/bin/pip install -r requirements.txt
 
 clean:
 	rm -rf env/
