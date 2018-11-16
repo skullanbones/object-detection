@@ -20,21 +20,17 @@ $(info MAKEFLAGS= $(MAKEFLAGS))
 PYTHON_VERSION ?= 2
 
 
-OBJS = $(patsubst %.cc,$(BUILDDIR)/%.o,$(SRCS))
-
-$(info OBJS is: $(OBJS))
-
-.PHONY: all clean lint flake docker-image docker-bash test gtests run clang-tidy clang-format unit-test component-tests
+.PHONY: all lint flake docker-image docker-bash docker-jupyter docker-stop venv clean clean-all
 
 help:
 	@echo
 	@echo '  all                   - build and create tsparser main executable.'
 	@echo '  lint                  - run clang formating for c++ and flake8 for python'
 	@echo '  flake                 - run flake8 on python files.'
-	@echo '  run                   - run tsparser for bbc_one.ts asset and write elementary streams.'
 	@echo '  docker-image          - builds new docker image with name:tag in Makefile.'
 	@echo '  docker-bash           - starts a docker bash session with settings in makefile.'
 	@echo '  docker-jupyter        - starts a docker bash with jupyter notebooks from tensorflow image.'
+	@echo '  docker-stop           - stops docker jupyter notebooks container.'
 	@echo '  venv                  - build python virtual environment for tensorflow CPU.'
 	@echo '  clean                 - deletes build content.'
 	@echo '  clean-all             - deletes build content + downloaded 3rd-party.'
