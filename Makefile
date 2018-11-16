@@ -60,12 +60,14 @@ docker-bash:
 		--runtime=nvidia \
 		--rm \
 		--interactive \
-		--publish 8888:8888 \
-		--volume=$$(pwd):/tmp \
 		--tty=true \
+		--publish 8888:8888 \
+		--publish 0.0.0.0:6006:6006 \
 		--env LOCAL_USER_ID=`id -u ${USER}` \
-		--volume /tmp/.X11-unix:/tmp/.X11-unix:ro \
+		--env MODELS_ROOT=/tmp/models \
 		--env DISPLAY=unix$$DISPLAY \
+		--volume /tmp/.X11-unix:/tmp/.X11-unix:ro \
+		--volume=$$(pwd):/tmp \
 		$(DOCKER_IMAGE_NAME):$(DOCKER_IMAGE_VER) /bin/bash
 
 

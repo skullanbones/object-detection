@@ -80,3 +80,6 @@ ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 
 # Start up jupyter notebooks
 #CMD ["/run_jupyter.sh", "--allow-root"]
+
+# Tensorboard
+EXPOSE 6006/tcp
