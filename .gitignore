@@ -1,2 +1,4 @@
 protoc3
 models
+venv
+.ipynb_checkpoints

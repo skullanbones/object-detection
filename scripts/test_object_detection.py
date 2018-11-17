@@ -6,13 +6,6 @@ import tarfile
 import tensorflow as tf
 import os.path
 import collections
-
-
-#from collections import defaultdict
-#from io import StringIO
-#from matplotlib import pyplot as plt
-#from PIL import Image
-
 import cv2
 
 video_files = ['test.mp4']
