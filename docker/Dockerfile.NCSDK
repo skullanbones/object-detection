@@ -1,0 +1,57 @@
+######################################################################
+#
+# Simple Dockerfile for building with Intel Neural Compute Stick SDK.
+#
+######################################################################
+
+FROM ubuntu:16.04 as base
+
+### Create user account ###
+#FROM base as user
+RUN apt-get update && apt-get -y --no-install-recommends install \
+    ca-certificates \
+    curl \
+    git \
+    wget \
+    build-essential \
+    sudo \
+    less \
+    lsb-release \
+    udev \
+    usbutils
+
+
+RUN gpg --keyserver ha.pool.sks-keyservers.net --recv-keys B42F6819007F00F88E364FD4036A9C25BF357DD4
+RUN curl -o /usr/local/bin/gosu -SL "https://github.com/tianon/gosu/releases/download/1.4/gosu-$(dpkg --print-architecture)" \
+    && curl -o /usr/local/bin/gosu.asc -SL "https://github.com/tianon/gosu/releases/download/1.4/gosu-$(dpkg --print-architecture).asc" \
+    && gpg --verify /usr/local/bin/gosu.asc \
+    && rm /usr/local/bin/gosu.asc \
+    && chmod +x /usr/local/bin/gosu
+
+## TODO fix in entrypoint???
+RUN mkdir -p /etc/sudoers.d/
+RUN echo "docker ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/10-installer
+
+### Builder image ###
+#FROM user as build
+
+
+WORKDIR /home/docker
+
+RUN echo "alias ll='ls -l'" > /home/docker/.bashrc
+
+### Install Intel NCSDK
+RUN git clone https://github.com/movidius/ncsdk.git
+WORKDIR /home/docker/ncsdk
+RUN chmod +x *.sh
+RUN make install
+RUN make examples
+
+# Add root password
+RUN echo "root:Docker!" | chpasswd
+
+# entrypoint
+COPY ./entrypoint.sh /usr/local/bin/entrypoint.sh
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
+
+ENV LANG=en_US.UTF-8
