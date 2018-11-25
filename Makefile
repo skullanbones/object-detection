@@ -87,7 +87,6 @@ docker-stop:
 venv:
 	virtualenv -p python$(PYTHON_VERSION) $@
 	./venv/bin/pip install -r requirements_cpu.txt
-	source ./venv/bin/activate
 
 clean:
 	rm -rf env/
