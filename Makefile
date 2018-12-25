@@ -90,8 +90,12 @@ docker-bash-ncsdk:
 		--env MODELS_ROOT=/home/docker/models \
 		--env DISPLAY=unix$$DISPLAY \
 		--env TERM=xterm-256color \
+		--env QT_X11_NO_MITSHM=1 \
+		--privileged \
 		--volume /tmp/.X11-unix:/tmp/.X11-unix:ro \
 		--volume=$$(pwd):/home/docker/workspace \
+		--volume /dev:/dev \
+		--net=host \
 		heliconwave/ncsdk:v1 /bin/bash		
 
 

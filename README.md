@@ -1,6 +1,7 @@
 # Tensorflow object detection
+![](images/tensorflow_logo.png)
 
-## Run Demo
+## Run Tensorflow Object Detection API Demo
 First clone models:
 ```
 git clone https://github.com/tensorflow/models.git          [1]
@@ -44,6 +45,8 @@ Thu Nov 15 10:20:49 2018
 |=============================================================================|
 +-----------------------------------------------------------------------------+
 ```
+This image explains it all:
+![](images/nvidia_docker.png)
 
 ## Specialized images
 In order to do GPU accelerated calculations based on the NVIDIA cuDNN and tensorflow
@@ -64,3 +67,25 @@ To be able to run X-server applications like opencv uses you need to type on you
 xhost +local:docker
 ```
 where docker is the user for your docker deamon, which should not be root following best practise. 
+
+# Movidius
+![](images/movidius_logo.png)
+
+## Docker
+Build image:
+```
+make docker-image-ncsdk
+```
+Run image with priviliged rights:
+```
+make docker-bash-ncsdk
+```
+
+## Example
+![](images/example1.png)
+```
+git clone https://github.com/movidius/ncappzoo.git
+make docker-image-ncsdk
+cd ncappzoo/apps/object-detector
+sudo python3 object-detector.py --image ../../data/images/pic_075.jpg 
+```
