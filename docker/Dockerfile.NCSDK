@@ -1,0 +1,70 @@
+######################################################################
+#
+# Simple Dockerfile for building with Intel Neural Compute Stick SDK.
+#
+######################################################################
+
+FROM ubuntu:16.04 as base
+
+### Create user account ###
+#FROM base as user
+RUN apt-get update && apt-get -y --no-install-recommends install
+RUN apt-get install --yes --no-install-recommends ca-certificates
+RUN apt-get install --yes --no-install-recommends curl
+RUN apt-get install --yes --no-install-recommends git
+RUN apt-get install --yes --no-install-recommends wget
+RUN apt-get install --yes --no-install-recommends build-essential
+RUN apt-get install --yes --no-install-recommends sudo
+RUN apt-get install --yes --no-install-recommends less
+RUN apt-get install --yes --no-install-recommends lsb-release
+RUN apt-get install --yes --no-install-recommends udev
+RUN apt-get install --yes --no-install-recommends usbutils
+RUN apt-get install --yes --no-install-recommends libv4l-dev
+RUN apt-get install --yes --no-install-recommends nano
+RUN apt-get install --yes --no-install-recommends python3-tk
+
+
+# Get key server
+COPY gosukeys.sh /gosukeys.sh
+RUN ./gosukeys.sh
+
+RUN curl -o /usr/local/bin/gosu -SL "https://github.com/tianon/gosu/releases/download/1.4/gosu-$(dpkg --print-architecture)" \
+    && curl -o /usr/local/bin/gosu.asc -SL "https://github.com/tianon/gosu/releases/download/1.4/gosu-$(dpkg --print-architecture).asc" \
+    && gpg --verify /usr/local/bin/gosu.asc \
+    && rm /usr/local/bin/gosu.asc \
+    && chmod +x /usr/local/bin/gosu
+
+
+## TODO fix in entrypoint???
+RUN adduser docker
+RUN mkdir -p /etc/sudoers.d/
+RUN echo "docker ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/10-installer
+
+### Builder image ###
+#FROM user as build
+
+WORKDIR /home/docker
+
+RUN echo "alias ll='ls -l'" > /home/docker/.bashrc
+
+### Install Intel NCSDK
+RUN git clone http://github.com/movidius/ncsdk --depth=1
+RUN chown -R docker:docker ncsdk
+WORKDIR /home/docker/ncsdk
+RUN chmod +x *.sh
+RUN make install
+RUN chmod +x *.sh
+RUN yes | ./install-opencv.sh
+
+# Python packages
+RUN pip3 install scikit-image
+
+# Add root password
+RUN echo "root:Docker!" | chpasswd
+
+# entrypoint
+COPY ./entrypoint_ncsdk.sh /usr/local/bin/entrypoint.sh
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
+
+ENV LANG=en_US.UTF-8
+WORKDIR /home/docker/workspace

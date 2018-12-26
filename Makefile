@@ -20,16 +20,18 @@ $(info MAKEFLAGS= $(MAKEFLAGS))
 PYTHON_VERSION ?= 2
 
 
-.PHONY: all lint flake docker-image docker-bash docker-jupyter docker-stop venv clean clean-all
+.PHONY: all lint flake docker-image docker-image-ncsdk docker-bash docker-bash-ncsdk docker-jupyter docker-stop venv clean clean-all
 
 help:
 	@echo
 	@echo '  all                   - build and create tsparser main executable.'
 	@echo '  lint                  - run clang formating for c++ and flake8 for python'
 	@echo '  flake                 - run flake8 on python files.'
-	@echo '  docker-image          - builds new docker image with name:tag in Makefile.'
-	@echo '  docker-bash           - starts a docker bash session with settings in makefile.'
-	@echo '  docker-jupyter        - starts a docker bash with jupyter notebooks from tensorflow image.'
+	@echo '  docker-image          - builds new docker image with name:tag in Makefile.variables'
+	@echo '  docker-image-ncsdk    - builds new docker image for Movidius with NCSDK: ncsdk:v1'
+	@echo '  docker-bash           - starts a docker bash interactive container with image in Makefile.variables'
+	@echo '  docker-bash-ncsdk     - starts a docker bash interactive container with Movidius NCSDK image.'
+	@echo '  docker-jupyter        - starts a docker bash with jupyter notebooks from tensorflow GPU image.'
 	@echo '  docker-stop           - stops docker jupyter notebooks container.'
 	@echo '  venv                  - build python virtual environment for tensorflow CPU.'
 	@echo '  clean                 - deletes build content.'
@@ -51,7 +53,15 @@ flake:
 docker-image:
 	docker build \
 		--file=$(DOCKERDIR)/Dockerfile \
-		--tag=$(DOCKER_IMAGE_NAME):$(DOCKER_IMAGE_VER) docker/
+		--tag=$(DOCKER_IMAGE_NAME):$(DOCKER_IMAGE_VER) \
+		--tag=$(DOCKER_IMAGE_NAME):latest docker/
+
+
+docker-image-ncsdk:
+	docker build \
+		--file=$(DOCKERDIR)/Dockerfile.NCSDK \
+		--tag=heliconwave/ncsdk:v1 \
+		--tag=heliconwave/ncsdk:latest docker/
 
 
 # start tty session inside docker container
@@ -66,9 +76,27 @@ docker-bash:
 		--env LOCAL_USER_ID=`id -u ${USER}` \
 		--env MODELS_ROOT=/tmp/models \
 		--env DISPLAY=unix$$DISPLAY \
+		--env TERM=xterm-256color \
 		--volume /tmp/.X11-unix:/tmp/.X11-unix:ro \
 		--volume=$$(pwd):/tmp \
 		$(DOCKER_IMAGE_NAME):$(DOCKER_IMAGE_VER) /bin/bash
+
+docker-bash-ncsdk:
+	docker run \
+		--rm \
+		--interactive \
+		--tty=true \
+		--env LOCAL_USER_ID=`id -u ${USER}` \
+		--env MODELS_ROOT=/home/docker/models \
+		--env DISPLAY=unix$$DISPLAY \
+		--env TERM=xterm-256color \
+		--env QT_X11_NO_MITSHM=1 \
+		--privileged \
+		--volume /tmp/.X11-unix:/tmp/.X11-unix:ro \
+		--volume=$$(pwd):/home/docker/workspace \
+		--volume /dev:/dev \
+		--net=host \
+		$(DOCKER_IMAGE_NCSDK):$(DOCKER_IMAGE_VER_NCSDK) /bin/bash
 
 
 docker-jupyter:
@@ -87,7 +115,6 @@ docker-stop:
 venv:
 	virtualenv -p python$(PYTHON_VERSION) $@
 	./venv/bin/pip install -r requirements_cpu.txt
-	source ./venv/bin/activate
 
 clean:
 	rm -rf env/

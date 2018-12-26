@@ -1,6 +1,9 @@
-# Tensorflow object detection
+# Computer vision with AI
 
-## Run Demo
+## Tensorflow object detection
+![](images/tensorflow_logo.png)
+
+### Run Tensorflow Object Detection API Demo
 First clone models:
 ```
 git clone https://github.com/tensorflow/models.git          [1]
@@ -18,7 +21,7 @@ When successfull you will get something like:
 
 ![](images/tensorflow_jupyter_demo.png)
 
-## Install NVIDIA docker
+### Install NVIDIA docker
 Check this [link](https://github.com/NVIDIA/nvidia-docker) on how to install *NVIDIA Container Runtime for Docker*.
 If you don't have docker check this tutorial to install it on [Ubuntu](https://docs.docker.com/install/linux/docker-ce/ubuntu/).
 When successfull this command will run
@@ -44,8 +47,10 @@ Thu Nov 15 10:20:49 2018
 |=============================================================================|
 +-----------------------------------------------------------------------------+
 ```
+This image explains it all:
+![](images/nvidia_docker.png)
 
-## Specialized images
+### Specialized images
 In order to do GPU accelerated calculations based on the NVIDIA cuDNN and tensorflow
 use the image `heliconwave/object-detection`. You can build it via:
 ```
@@ -64,3 +69,48 @@ To be able to run X-server applications like opencv uses you need to type on you
 xhost +local:docker
 ```
 where docker is the user for your docker deamon, which should not be root following best practise. 
+
+## Movidius
+![](images/movidius_logo.png)
+
+Note only Movidius Neural Stick ver 1 works with NCSDK. To use the Neural Compute Stick ver2 OpenVINO is required and will not work with NCSDK. Docker images described below is for NVSDK ver 1.0 API.
+
+### Docker
+Build image:
+```
+make docker-image-ncsdk
+```
+Run image with priviliged rights:
+```
+make docker-bash-ncsdk
+```
+
+### Example
+For all examples you need to download the App Zoo and start a docker container:
+```
+git clone https://github.com/movidius/ncappzoo.git
+make docker-bash-ncsdk
+```
+![](images/example1.png)
+
+To run image classifier:
+```
+cd ncappzoo/apps/object-detector
+sudo python3 object-detector.py --image ../../data/images/pic_075.jpg 
+```
+To run live object-detection:
+```
+cd ncappzoo/apps/live-object-detector
+sudo make run
+```
+
+Verified working examples:
+* security-cam
+* video_face_matcher
+* MultiStick_TF_Inception
+* image-classifier
+* rapid-image-classifier
+
+Verified does NOT work
+* gender_age_lbp
+* live-image-classifier
