@@ -53,6 +53,8 @@ RUN chown -R docker:docker ncsdk
 WORKDIR /home/docker/ncsdk
 RUN chmod +x *.sh
 RUN make install
+RUN chmod +x *.sh
+RUN yes | ./install-opencv.sh
 
 # Python packages
 RUN pip3 install scikit-image
