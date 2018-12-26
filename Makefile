@@ -20,7 +20,7 @@ $(info MAKEFLAGS= $(MAKEFLAGS))
 PYTHON_VERSION ?= 2
 
 
-.PHONY: all lint flake docker-image docker-bash docker-jupyter docker-stop venv clean clean-all
+.PHONY: all lint flake docker-image docker-image-ncsdk docker-bash docker-bash-ncsdk docker-jupyter docker-stop venv clean clean-all
 
 help:
 	@echo
@@ -96,7 +96,7 @@ docker-bash-ncsdk:
 		--volume=$$(pwd):/home/docker/workspace \
 		--volume /dev:/dev \
 		--net=host \
-		heliconwave/ncsdk:v1 /bin/bash		
+		$(DOCKER_IMAGE_NCSDK):$(DOCKER_IMAGE_VER_NCSDK) /bin/bash
 
 
 docker-jupyter:
