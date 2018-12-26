@@ -72,6 +72,7 @@ where docker is the user for your docker deamon, which should not be root follow
 
 ## Movidius
 ![](images/movidius_logo.png)
+
 Note only Movidius Neural Stick ver 1 works with NCSDK. To use the Neural Compute Stick ver2 OpenVINO is required and will not work with NCSDK. Docker images described below is for NVSDK ver 1.0 API.
 
 ### Docker
@@ -85,12 +86,12 @@ make docker-bash-ncsdk
 ```
 
 ### Example
-![](images/example1.png)
 For all examples you need to download the App Zoo and start a docker container:
 ```
 git clone https://github.com/movidius/ncappzoo.git
 make docker-bash-ncsdk
 ```
+![](images/example1.png)
 
 To run image classifier:
 ```
