@@ -87,7 +87,7 @@ make docker-bash-ncsdk
 ![](images/example1.png)
 ```
 git clone https://github.com/movidius/ncappzoo.git
-make docker-image-ncsdk
+make docker-bash-ncsdk
 cd ncappzoo/apps/object-detector
 sudo python3 object-detector.py --image ../../data/images/pic_075.jpg 
 ```

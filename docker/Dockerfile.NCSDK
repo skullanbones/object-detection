@@ -48,10 +48,11 @@ WORKDIR /home/docker
 RUN echo "alias ll='ls -l'" > /home/docker/.bashrc
 
 ### Install Intel NCSDK
-RUN git clone -b ncsdk2 http://github.com/movidius/ncsdk --depth=1
+RUN git clone http://github.com/movidius/ncsdk --depth=1
+RUN chown -R docker:docker ncsdk
 WORKDIR /home/docker/ncsdk
 RUN chmod +x *.sh
-RUN sudo make install
+RUN make install
 
 # Python packages
 RUN pip3 install scikit-image
