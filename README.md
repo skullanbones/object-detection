@@ -103,3 +103,14 @@ To run live object-detection:
 cd ncappzoo/apps/live-object-detector
 sudo make run
 ```
+
+Verified working examples:
+* security-cam
+* video_face_matcher
+* MultiStick_TF_Inception
+* image-classifier
+* rapid-image-classifier
+
+Verified does NOT work
+* gender_age_lbp
+* live-image-classifier
