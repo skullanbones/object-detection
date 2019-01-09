@@ -171,7 +171,7 @@ IMAGE_SIZE = (12, 8)
 # In[10]:
 
 for videofile in video_files:
-  videofile = "segments/" + videofile
+#  videofile = "segments/" + videofile
   print("processing file {0}".format(videofile))
 
   try:

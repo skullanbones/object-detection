@@ -62,13 +62,30 @@ make docker-bash
 ```
 If you are running object-detection API from `[1]` you need run this command before outside the docker container:
 ```
-protoc object_detection/protos/*.proto --python_out=.
+protoc object_detection/protos/*.proto --python_out=.             [2]
 ```
 To be able to run X-server applications like opencv uses you need to type on your host OS:
 ```
-xhost +local:docker
+xhost +local:docker                                               [3]
 ```
 where docker is the user for your docker deamon, which should not be root following best practise. 
+
+
+### Examples
+Run git clone on `[1]` inside this project. It will be ignored by git. Run command `[2]` on models you just cloned and then allow X server via docker with `[3]`. Copy `test.mp4` and `test_object_detection.py` from `scripts` to `models/research/object_detection/`. Now start the demo by
+```
+make docker-bash
+```
+and change folder to 
+```
+cd /tmp/models/research/object_detection/
+```
+and start the demo:
+```
+python test_object_detection.py
+```
+Feel free to modify the script `test_object_detection.py` to use other models or your own models and also to use other assets. If you have a webcamera a simple demo would be to patch this file by uncomment
+
 
 ## Movidius
 ![](images/movidius_logo.png)
