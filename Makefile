@@ -77,8 +77,10 @@ docker-bash:
 		--env MODELS_ROOT=/tmp/models \
 		--env DISPLAY=unix$$DISPLAY \
 		--env TERM=xterm-256color \
+		--privileged \
 		--volume /tmp/.X11-unix:/tmp/.X11-unix:ro \
 		--volume=$$(pwd):/tmp \
+		--volume /dev/video0:/dev/video0 \
 		$(DOCKER_IMAGE_NAME):$(DOCKER_IMAGE_VER) /bin/bash
 
 docker-bash-ncsdk:
