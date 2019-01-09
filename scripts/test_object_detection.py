@@ -8,8 +8,6 @@ import os.path
 import collections
 import cv2
 
-video_files = ['test.mp4']
-
 
 # This is needed since the notebook is stored in the object_detection folder.
 sys.path.append("..")
@@ -22,6 +20,26 @@ sys.path.append("..")
 from utils import label_map_util
 
 from utils import visualization_utils as vis_util
+
+
+## Choose input device or asset
+def has_web_cam(source=0):
+  try:
+    cap = cv2.VideoCapture(source)
+  except cv2.error as e:
+    print('got exception e' + e)
+    return False
+  if cap is None or not cap.isOpened():
+    print('Warning: unable to open video source: ', source)
+    return False
+  return True
+
+video_files = ['test.mp4'] # Enable to use test asset
+if has_web_cam(0):
+  print('Using webcamera.')
+  video_files = [0] # Try enable to use webcamera instead
+else:
+  print('Using test assests.')
 
 
 # # Model preparation 
@@ -171,7 +189,6 @@ IMAGE_SIZE = (12, 8)
 # In[10]:
 
 for videofile in video_files:
-  videofile = "segments/" + videofile
   print("processing file {0}".format(videofile))
 
   try:

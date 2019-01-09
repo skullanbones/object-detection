@@ -62,13 +62,53 @@ make docker-bash
 ```
 If you are running object-detection API from `[1]` you need run this command before outside the docker container:
 ```
-protoc object_detection/protos/*.proto --python_out=.
+protoc object_detection/protos/*.proto --python_out=.             [2]
 ```
 To be able to run X-server applications like opencv uses you need to type on your host OS:
 ```
-xhost +local:docker
+xhost +local:docker                                               [3]
 ```
-where docker is the user for your docker deamon, which should not be root following best practise. 
+where docker is the user for your docker deamon, which should not be root following best practise.
+
+
+### Examples
+#### GPU
+First make sure you have a NVIDIA graphic card to be able to run these examples:
+```
+lspci | grep -i nvidia
+```
+
+Run git clone on `[1]` inside this project. It will be ignored by git. Run command `[2]` on models you just cloned and then allow X server via docker with `[3]`. Copy `test.mp4` and `test_object_detection.py` from `scripts` to `models/research/object_detection/`. Now start the demo by
+```
+make docker-bash
+```
+and change folder to
+```
+cd /tmp/models/research/object_detection/
+```
+and start the demo:
+```
+python test_object_detection.py
+```
+Feel free to modify the script `test_object_detection.py` to use other models or your own models and also to use other assets. If you have a webcamera the simple demo will display the video from the web-camera with overlays of object detections. Otherwise a test asset will be used.
+Quit the example by typing q.
+
+#### CPU
+Like for GPU you need first download the `[1]` inside this project. Then copy
+`test_object_detection.py` from `scripts` to `models/research/object_detection/`. Now create your python environment:
+```
+make venv
+```
+which downloads Tensorflow for CPU. Activate your new environment:
+```
+source ./venv/bin/activate
+```
+and cd directory to `models/research/object_detection/`. Run the demo by:
+```
+python test_object_detection.py
+```
+You will see a video of yourself if you have a webcamera otherwise a short clip. Quit the example by typing q.
+
 
 ## Movidius
 ![](images/movidius_logo.png)
