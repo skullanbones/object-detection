@@ -5,31 +5,35 @@
 
 ### Run Tensorflow Object Detection API Demo
 First clone models:
-```
+```Bash
 git clone https://github.com/tensorflow/models.git          [1]
 ```
 in this folder which is mounted into docker when running the tensorflow GPU container by:
-```
+```Bash
 make docker-jupyter
 ```
-which starts up jupyter notebooks session in object-detection folder. Now you are ready to run
-the demo example:
-```
-object_detection_tutorial.ipynb
+which starts up jupyter notebooks session in object-detection folder. You can access it via `http://127.0.0.1:8888` and a token which is shown in the shell. Now you are ready to run the demo example:
+```Bash
+./models/research/object_detection/object_detection_tutorial.ipynb
 ```
 When successfull you will get something like:
 
 ![](images/tensorflow_jupyter_demo.png)
 
+Top stop the container  you need to type in another shell:
+```Bash
+make docker-stop
+```
+
 ### Install NVIDIA docker
 Check this [link](https://github.com/NVIDIA/nvidia-docker) on how to install *NVIDIA Container Runtime for Docker*.
 If you don't have docker check this tutorial to install it on [Ubuntu](https://docs.docker.com/install/linux/docker-ce/ubuntu/).
 When successfull this command will run
-```
+```Bash
 docker run --runtime=nvidia --rm nvidia/cuda:9.0-base nvidia-smi
 ```
 and give something like:
-```
+```Bash
 Thu Nov 15 10:20:49 2018       
 +-----------------------------------------------------------------------------+
 | NVIDIA-SMI 390.77                 Driver Version: 390.77                    |
@@ -53,11 +57,11 @@ This image explains it all:
 ### Specialized images
 In order to do GPU accelerated calculations based on the NVIDIA cuDNN and tensorflow
 use the image `heliconwave/object-detection`. You can build it via:
-```
+```Bash
 make docker-image
 ```
 To enter bash type:
-```
+```Bash
 make docker-bash
 ```
 If you are running object-detection API from `[1]` you need run this command before outside the docker container:
@@ -117,29 +121,29 @@ Note only Movidius Neural Stick ver 1 works with NCSDK. To use the Neural Comput
 
 ### Docker
 Build image:
-```
+```Bash
 make docker-image-ncsdk
 ```
 Run image with priviliged rights:
-```
+```Bash
 make docker-bash-ncsdk
 ```
 
 ### Example
 For all examples you need to download the App Zoo and start a docker container:
-```
+```Bash
 git clone https://github.com/movidius/ncappzoo.git
 make docker-bash-ncsdk
 ```
 ![](images/example1.png)
 
 To run image classifier:
-```
+```Bash
 cd ncappzoo/apps/object-detector
 sudo python3 object-detector.py --image ../../data/images/pic_075.jpg 
 ```
 To run live object-detection:
-```
+```Bash
 cd ncappzoo/apps/live-object-detector
 sudo make run
 ```
