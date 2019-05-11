@@ -10,7 +10,7 @@ git clone https://github.com/tensorflow/models.git          [1]
 ```
 in this folder which is mounted into docker when running the tensorflow GPU container by:
 ```Bash
-make docker-jupyter
+docker-compose up jupyter
 ```
 which starts up jupyter notebooks session in object-detection folder. You can access it via `http://127.0.0.1:8888` and a token which is shown in the shell. Now you are ready to run the demo example:
 ```Bash
@@ -20,9 +20,9 @@ When successfull you will get something like:
 
 ![](images/tensorflow_jupyter_demo.png)
 
-Top stop the container  you need to type in another shell:
+Top stop the container type `Ctrl-C` or in another shell type:
 ```Bash
-make docker-stop
+docker-compose stop jupyter
 ```
 
 ### Install NVIDIA docker

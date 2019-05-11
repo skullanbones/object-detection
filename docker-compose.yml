@@ -1,0 +1,14 @@
+version: "3"
+
+services:
+  jupyter:
+    container_name: tensorflow-jupyter-notebooks
+    image: tensorflow/tensorflow:nightly-gpu
+    ports:
+      - "8888:8888/tcp"
+      - "8888:8888/udp"
+    entrypoint:
+      - /notebooks/workdir/entrypoint.sh
+    volumes:
+      - ./:/notebooks/workdir
+    restart: unless-stopped
