@@ -60,8 +60,8 @@ docker-image:
 docker-image-ncsdk:
 	docker build \
 		--file=$(DOCKERDIR)/Dockerfile.NCSDK \
-		--tag=heliconwave/ncsdk:v1 \
-		--tag=heliconwave/ncsdk:latest docker/
+		--tag=$(DOCKER_IMAGE_NCSDK):$(DOCKER_IMAGE_VER_NCSDK) \
+		--tag=$(DOCKER_IMAGE_NCSDK):latest docker/
 
 
 # start tty session inside docker container

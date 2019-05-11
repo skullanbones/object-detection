@@ -128,6 +128,10 @@ Run image with priviliged rights:
 ```Bash
 make docker-bash-ncsdk
 ```
+or using compose:
+```Bash
+LOCAL_USER_ID=$(id -u ${USER}) docker-compose run ncsdk bash
+```
 
 ### Example
 For all examples you need to download the App Zoo and start a docker container:

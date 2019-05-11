@@ -5,10 +5,26 @@ services:
     container_name: tensorflow-jupyter-notebooks
     image: tensorflow/tensorflow:nightly-gpu
     ports:
-      - "8888:8888/tcp"
-      - "8888:8888/udp"
+      - 8888:8888
     entrypoint:
       - /notebooks/workdir/entrypoint.sh
     volumes:
       - ./:/notebooks/workdir
     restart: unless-stopped
+
+  ncsdk:
+    container_name: ncsdk-bash
+    image : heliconwave/ncsdk:v2
+    environment: 
+      - LOCAL_USER_ID=${LOCAL_USER_ID}
+      - MODELS_ROOT=/home/docker/models
+      - DISPLAY=unix$$DISPLAY
+      - TERM=xterm-256color
+      - QT_X11_NO_MITSHM=1
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix:ro
+      - ./:/home/docker/workspace
+      - /dev:/dev
+    privileged: true
+    stdin_open: true
+    tty: true
