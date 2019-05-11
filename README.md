@@ -12,10 +12,9 @@ in this folder which is mounted into docker when running the tensorflow GPU cont
 ```
 make docker-jupyter
 ```
-which starts up jupyter notebooks session in object-detection folder. Now you are ready to run
-the demo example:
+which starts up jupyter notebooks session in object-detection folder. You can access it via `http://127.0.0.1:8888` and a token which is shown in the shell. Now you are ready to run the demo example:
 ```
-object_detection_tutorial.ipynb
+./models/research/object_detection/object_detection_tutorial.ipynb
 ```
 When successfull you will get something like:
 
