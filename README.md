@@ -130,7 +130,7 @@ make docker-bash-ncsdk
 ```
 or using compose:
 ```Bash
-LOCAL_USER_ID=$(id -u ${USER}) docker-compose run ncsdk bash
+LOCAL_USER_ID=$(id -u ${USER}) DISPLAY=${DISPLAY} docker-compose run ncsdk bash
 ```
 
 ### Example
@@ -145,6 +145,11 @@ To run image classifier:
 ```Bash
 cd ncappzoo/apps/object-detector
 sudo python3 object-detector.py --image ../../data/images/pic_075.jpg 
+```
+If you run into an error message that you are missing the graph it means you have not downloaded the model by first building the example:
+```Bash
+cd ncappzoo/caffe/SSD_MobileNet
+make
 ```
 To run live object-detection:
 ```Bash
