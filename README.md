@@ -83,15 +83,19 @@ lspci | grep -i nvidia
 ```
 
 Run git clone on `[1]` inside this project. It will be ignored by git. Run command `[2]` on models you just cloned and then allow X server via docker with `[3]`. Copy `test.mp4` and `test_object_detection.py` from `scripts` to `models/research/object_detection/`. Now start the demo by
-```
+```Bash
 make docker-bash
 ```
-and change folder to
+or use docker-compose:
+```Bash
+LOCAL_USER_ID=$(id -u ${USER}) DISPLAY=${DISPLAY} docker-compose run object-detection bash
 ```
+and change folder to
+```Bash
 cd /tmp/models/research/object_detection/
 ```
 and start the demo:
-```
+```Bash
 python test_object_detection.py
 ```
 Feel free to modify the script `test_object_detection.py` to use other models or your own models and also to use other assets. If you have a webcamera the simple demo will display the video from the web-camera with overlays of object detections. Otherwise a test asset will be used.
