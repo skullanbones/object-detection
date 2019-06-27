@@ -64,11 +64,15 @@ To enter bash type:
 ```Bash
 make docker-bash
 ```
+or alternatively using `docker-compose`:
+```
+LOCAL_USER_ID=$(id -u ${USER}) DISPLAY=${DISPLAY} docker-compose run object-detection bash
+```
 If you are running object-detection API from `[1]` you need run this command before outside the docker container:
 ```
 protoc object_detection/protos/*.proto --python_out=.             [2]
 ```
-To be able to run X-server applications like opencv uses you need to type on your host OS:
+To be able to run X-server applications like opencv from Docker you need to type on your host OS:
 ```
 xhost +local:docker                                               [3]
 ```
