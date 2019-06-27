@@ -117,8 +117,33 @@ python test_object_detection.py
 ```
 You will see a video of yourself if you have a webcamera otherwise a short clip. Quit the example by typing q.
 
+### Custom models
+If you need to run a custom model that you trained you can copy it to `./models/research/object-detection/data` and the model folder need to be stored under `./models/research/object-detection`. To run your new model you need to edit the python script `test_object_detection.py`. These are the minimum changes required to run a custom model:
 
-## Movidius
+Change line 35:
+```
+return False
+```
+Change line 37:
+```
+video_files = ['my_eval_asset.mp4']
+```
+Change `MODEL_NAME` line 56:
+```
+MODEL_NAME = 'my_custom_model'
+```
+Change model line 67:
+```
+PATH_TO_LABELS = os.path.join('data', 'my-object-detection-model.pbtxt')
+```
+Run the specific model:
+```
+> python test_object_detection.py
+```
+
+
+
+## Movidius (NCS ver 1)
 ![](images/movidius_logo.png)
 
 Note only Movidius Neural Stick ver 1 works with NCSDK. To use the Neural Compute Stick ver2 OpenVINO is required and will not work with NCSDK. Docker images described below is for NVSDK ver 1.0 API.
