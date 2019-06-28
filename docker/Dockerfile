@@ -4,33 +4,28 @@
 #
 ##################################################
 
-FROM nvidia/cuda:9.0-base-ubuntu16.04 as base
+FROM nvidia/cuda:9.0-base-ubuntu16.04
 
-### Create user account ###
-FROM base as user
+### install packages ###
 RUN apt-get update && apt-get -y --no-install-recommends install \
     ca-certificates \
     curl \
     gnupg2 \
-    gosu
+    gosu \
+    python-qt4 \
+    git \
+    wget \
+    nano \
+    autotools-dev \
+    libtool \
+    autoconf \
+    automake \
+    unzip \
+    less
 
-### Builder image ###
-FROM user as build
-
-## Packages
-RUN apt-get update && apt-get install --yes --no-install-recommends
-RUN apt-get install --yes --no-install-recommends python-qt4
-RUN apt-get install --yes --no-install-recommends git
-RUN apt-get install --yes --no-install-recommends wget
-RUN apt-get install --yes --no-install-recommends nano
-RUN apt-get install --yes --no-install-recommends autotools-dev
-RUN apt-get install --yes --no-install-recommends libtool
-RUN apt-get install --yes --no-install-recommends autoconf
-RUN apt-get install --yes --no-install-recommends automake 
-RUN apt-get install --yes --no-install-recommends unzip
-RUN apt-get install --yes --no-install-recommends less
 
 ## Python base 2.7
+RUN apt-get update && apt-get install --yes --no-install-recommends
 RUN apt-get install --yes --no-install-recommends python-pip
 RUN apt-get install --yes --no-install-recommends virtualenv
 RUN apt-get install --yes --no-install-recommends python-setuptools
