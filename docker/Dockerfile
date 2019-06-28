@@ -4,58 +4,56 @@
 #
 ##################################################
 
-FROM nvidia/cuda:9.0-base-ubuntu16.04 as base
+FROM nvidia/cuda:9.0-base-ubuntu16.04
 
-### Create user account ###
-FROM base as user
+ENV DEBIAN_FRONTEND noninteractive
+
+### install packages ###
 RUN apt-get update && apt-get -y --no-install-recommends install \
+    apt-utils \
     ca-certificates \
-    curl
+    curl \
+    gnupg2 \
+    gosu \
+    python-qt4 \
+    git \
+    wget \
+    nano \
+    autotools-dev \
+    libtool \
+    autoconf \
+    automake \
+    unzip \
+    less
+    
 
-RUN gpg --keyserver ha.pool.sks-keyservers.net --recv-keys B42F6819007F00F88E364FD4036A9C25BF357DD4
-RUN curl -o /usr/local/bin/gosu -SL "https://github.com/tianon/gosu/releases/download/1.4/gosu-$(dpkg --print-architecture)" \
-    && curl -o /usr/local/bin/gosu.asc -SL "https://github.com/tianon/gosu/releases/download/1.4/gosu-$(dpkg --print-architecture).asc" \
-    && gpg --verify /usr/local/bin/gosu.asc \
-    && rm /usr/local/bin/gosu.asc \
-    && chmod +x /usr/local/bin/gosu
 
-### Builder image ###
-FROM user as build
-
-## Packages
-RUN apt-get update && apt-get install --yes --no-install-recommends
-RUN apt-get install --yes --no-install-recommends python-qt4
-RUN apt-get install --yes --no-install-recommends git
-RUN apt-get install --yes --no-install-recommends wget
-RUN apt-get install --yes --no-install-recommends nano
-RUN apt-get install --yes --no-install-recommends autotools-dev
-RUN apt-get install --yes --no-install-recommends libtool
-RUN apt-get install --yes --no-install-recommends autoconf
-RUN apt-get install --yes --no-install-recommends automake 
-RUN apt-get install --yes --no-install-recommends unzip
-
-## Python base 2.7
-RUN apt-get install --yes --no-install-recommends python-pip
-RUN apt-get install --yes --no-install-recommends virtualenv
-RUN apt-get install --yes --no-install-recommends python-setuptools
-RUN apt-get install --yes --no-install-recommends python-dev
+## Python base 3
+RUN apt-get update && apt-get -y --no-install-recommends install \
+    python3 \
+    python3-pip \
+    virtualenv \
+    python3-setuptools \
+    python3-dev
 
 ## Install tensorflow dependencies
-RUN apt-get install --yes --no-install-recommends cuda-command-line-tools-9-0
-RUN apt-get install --yes --no-install-recommends cuda-cublas-9-0
-RUN apt-get install --yes --no-install-recommends cuda-cusolver-9-0
-RUN apt-get install --yes --no-install-recommends libcudnn7=7.2.1.38-1+cuda9.0
-RUN apt-get install --yes --no-install-recommends cuda-cufft-9-0
-RUN apt-get install --yes --no-install-recommends cuda-curand-9-0
+RUN apt-get update && apt-get -y --no-install-recommends install \
+    cuda-command-line-tools-9-0 \
+    cuda-cublas-9-0 \
+    cuda-cusolver-9-0 \
+    libcudnn7=7.2.1.38-1+cuda9.0 \
+    cuda-cufft-9-0 \
+    cuda-curand-9-0
 
 ## Python packages 
-# TODO use requirements.txt
-RUN pip install --upgrade pip
-RUN pip install opencv-python
-RUN pip install utils
-RUN pip install Pillow lxml six
-RUN pip install tensorflow-gpu
-RUN pip install matplotlib
+# TODO use requirements_gpu.txt
+RUN pip3 install --upgrade pip
+RUN pip3 install opencv-python
+RUN pip3 install utils
+RUN pip3 install Pillow lxml six
+RUN pip3 install tensorflow-gpu==1.12
+RUN pip3 install matplotlib
+RUN pip3 install --upgrade setuptools
 
 # Install protocol buffers tool
 RUN curl -L -o protoc-3.6.1-linux-x86_64.zip https://github.com/google/protobuf/releases/download/v3.6.1/protoc-3.6.1-linux-x86_64.zip
