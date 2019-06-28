@@ -10,14 +10,9 @@ FROM nvidia/cuda:9.0-base-ubuntu16.04 as base
 FROM base as user
 RUN apt-get update && apt-get -y --no-install-recommends install \
     ca-certificates \
-    curl
-
-RUN gpg --keyserver ha.pool.sks-keyservers.net --recv-keys B42F6819007F00F88E364FD4036A9C25BF357DD4
-RUN curl -o /usr/local/bin/gosu -SL "https://github.com/tianon/gosu/releases/download/1.4/gosu-$(dpkg --print-architecture)" \
-    && curl -o /usr/local/bin/gosu.asc -SL "https://github.com/tianon/gosu/releases/download/1.4/gosu-$(dpkg --print-architecture).asc" \
-    && gpg --verify /usr/local/bin/gosu.asc \
-    && rm /usr/local/bin/gosu.asc \
-    && chmod +x /usr/local/bin/gosu
+    curl \
+    gnupg2 \
+    gosu
 
 ### Builder image ###
 FROM user as build
@@ -33,6 +28,7 @@ RUN apt-get install --yes --no-install-recommends libtool
 RUN apt-get install --yes --no-install-recommends autoconf
 RUN apt-get install --yes --no-install-recommends automake 
 RUN apt-get install --yes --no-install-recommends unzip
+RUN apt-get install --yes --no-install-recommends less
 
 ## Python base 2.7
 RUN apt-get install --yes --no-install-recommends python-pip

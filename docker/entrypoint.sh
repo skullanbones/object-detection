@@ -15,5 +15,5 @@ export LC_ALL=C
 echo "Using MODELS_ROOT: $MODELS_ROOT"
 tensorboard --logdir=${MODELS_ROOT}/research/object_detection/training/ &
 
-exec /usr/local/bin/gosu "$USER" "$@"
+exec gosu "$USER" "$@"
 echo "entrypoint.sh finished..."
