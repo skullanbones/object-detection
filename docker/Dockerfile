@@ -4,7 +4,7 @@
 #
 ##################################################
 
-FROM nvidia/cuda:9.0-base-ubuntu16.04
+FROM nvidia/cuda:10.1-base-ubuntu18.04
 
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -38,12 +38,12 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
 
 ## Install tensorflow dependencies
 RUN apt-get update && apt-get -y --no-install-recommends install \
-    cuda-command-line-tools-9-0 \
-    cuda-cublas-9-0 \
-    cuda-cusolver-9-0 \
-    libcudnn7=7.2.1.38-1+cuda9.0 \
-    cuda-cufft-9-0 \
-    cuda-curand-9-0
+    cuda-command-line-tools-10-0 \
+    cuda-cublas-10-0 \
+    cuda-cusolver-10-0 \
+    libcudnn7 \
+    cuda-cufft-10-0 \
+    cuda-curand-10-0
 
 ## Python packages 
 # TODO use requirements_gpu.txt
@@ -51,7 +51,7 @@ RUN pip3 install --upgrade pip
 RUN pip3 install opencv-python
 RUN pip3 install utils
 RUN pip3 install Pillow lxml six
-RUN pip3 install tensorflow-gpu==1.12
+RUN pip3 install tensorflow-gpu=1.14.0
 RUN pip3 install matplotlib
 RUN pip3 install --upgrade setuptools
 
