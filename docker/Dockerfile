@@ -4,7 +4,7 @@
 #
 ##################################################
 
-FROM nvidia/cuda:10.1-base-ubuntu18.04
+FROM nvidia/cuda:10.0-base-ubuntu18.04
 
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -24,7 +24,8 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
     autoconf \
     automake \
     unzip \
-    less
+    less \
+    sudo
     
 
 
@@ -41,19 +42,20 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
     cuda-command-line-tools-10-0 \
     cuda-cublas-10-0 \
     cuda-cusolver-10-0 \
-    libcudnn7 \
+    libcudnn7=7.6.1.34-1+cuda10.1 \
     cuda-cufft-10-0 \
-    cuda-curand-10-0
+    cuda-curand-10-0 \
+    cuda-cusparse-10-0
 
 ## Python packages 
 # TODO use requirements_gpu.txt
 RUN pip3 install --upgrade pip
+RUN pip3 install --upgrade setuptools
 RUN pip3 install opencv-python
 RUN pip3 install utils
 RUN pip3 install Pillow lxml six
-RUN pip3 install tensorflow-gpu=1.14.0
+RUN pip3 install tensorflow-gpu==1.14.0
 RUN pip3 install matplotlib
-RUN pip3 install --upgrade setuptools
 
 # Install protocol buffers tool
 RUN curl -L -o protoc-3.6.1-linux-x86_64.zip https://github.com/google/protobuf/releases/download/v3.6.1/protoc-3.6.1-linux-x86_64.zip
