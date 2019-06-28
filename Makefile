@@ -17,7 +17,7 @@ MAKEFLAGS+="-j $(CORES)"
 $(info MAKEFLAGS= $(MAKEFLAGS))
 
 ## Python
-PYTHON_VERSION ?= 2
+PYTHON_VERSION ?= 3
 
 
 .PHONY: all lint flake docker-image docker-image-ncsdk docker-bash docker-bash-ncsdk docker-jupyter docker-stop venv clean clean-all
