@@ -32,7 +32,7 @@ services:
 
   object-detection:
     container_name: object-detection-bash
-    image: heliconwave/object-detection:v3
+    image: heliconwave/object-detection:v5
     runtime: nvidia
     stdin_open: true
     tty: true
