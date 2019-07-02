@@ -13,7 +13,7 @@ export HOME=/home/$USER
 
 export LC_ALL=C
 echo "Using MODELS_ROOT: $MODELS_ROOT"
-tensorboard --logdir=${MODELS_ROOT}/research/object_detection/training/ &
+tensorboard --logdir=${MODELS_ROOT}/research/object_detection/training/ &>/tmp/tensorboard_log.txt &
 
 exec gosu "$USER" "$@"
 echo "entrypoint.sh finished..."
