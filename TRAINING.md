@@ -72,7 +72,7 @@ In the top right corner see example below you can find the CUDA and driver versi
 
 ## Download the repo
 ```
-$ git clone git@github.com:skullanbones/object-detection.git                [0]
+$ git clone https://github.com/skullanbones/object-detection.git                [0]
 ```
 
 ## Download models
