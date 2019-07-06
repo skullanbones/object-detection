@@ -57,6 +57,8 @@ RUN pip3 install Pillow lxml six
 RUN pip3 install tensorflow-gpu==1.14.0
 RUN pip3 install matplotlib
 RUN pip3 install pandas
+RUN pip3 install cython 
+RUN pip3 install pycocotools
 
 # Install protocol buffers tool
 RUN curl -L -o protoc-3.6.1-linux-x86_64.zip https://github.com/google/protobuf/releases/download/v3.6.1/protoc-3.6.1-linux-x86_64.zip
