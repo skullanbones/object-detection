@@ -313,7 +313,7 @@ $ export PYTHONPATH=`pwd`:`pwd`/slim
 ```
 When you are in `/tmp/models/research` folder.
 ```
-$ python3 legacy/train.py --logtostderr --train_dir=training/ --pipeline_config_path=training/ssd_mobilenet_v1_pets.config
+$ python3 model_main.py --logtostderr --train_dir=training/ --pipeline_config_path=training/ssd_mobilenet_v1_pets.config
 ```
 
 If you run into memory exhaustion then you might need to lower the `batch_size` in `training/ssd_mobilenet_v1_pets.config`. Try half first and if that is not enough try half again. 
