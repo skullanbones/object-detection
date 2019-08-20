@@ -1,4 +1,16 @@
 # Computer vision with AI
+This repo contains a docker image with the purpose of process isolation for training and running tensorflow calculations on your NVIDIA GPU hardware isolating NVIDIA CUDA. This will simplify the installation and save considerable amount of time instead of having to install it on your host. It's also easy to reuse this image on AWS to simplify training on new AWS instances. Check requirements for what is required by the host.
+
+There is also a docker image available for NCS1 development.
+
+## Host requirements
+| Host                   | Version minimal requirement   |
+|------------------------|-------------------------------|
+| Ubuntu                 | 18.04                         |
+| Docker                 | >18.x                         |
+| NVIDIA Docker version  | >v2                           |
+| Nvidia driver          | > nvidia-driver-430           |
+
 
 ## Tensorflow object detection
 ![](images/tensorflow_logo.png)
