@@ -25,8 +25,8 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
     automake \
     unzip \
     less \
-    sudo
-    
+    sudo \
+    iputils-ping
 
 
 ## Python base 3
@@ -59,6 +59,7 @@ RUN pip3 install matplotlib
 RUN pip3 install pandas
 RUN pip3 install cython 
 RUN pip3 install pycocotools
+RUN pip3 install jupyter
 
 # Install protocol buffers tool
 RUN curl -L -o protoc-3.6.1-linux-x86_64.zip https://github.com/google/protobuf/releases/download/v3.6.1/protoc-3.6.1-linux-x86_64.zip
@@ -86,3 +87,5 @@ ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 
 # Tensorboard
 EXPOSE 6006/tcp
+# jupyter
+EXPOSE 8889/tcp
