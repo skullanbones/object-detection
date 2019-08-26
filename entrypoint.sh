@@ -18,5 +18,8 @@ cd /notebooks/workdir/
 # upgrade tensorflow
 pip install tensorflow --upgrade
 
+# install dependencies
+pip install jupyter matplotlib Pillow
+
 # Startup jupyter
-jupyter notebook --allow-root
+jupyter notebook --allow-root --ip=0.0.0.0 --port=8888

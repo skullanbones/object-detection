@@ -10,7 +10,6 @@ services:
       - /notebooks/workdir/entrypoint.sh
     volumes:
       - ./:/notebooks/workdir
-    restart: unless-stopped
 
   ncsdk:
     container_name: ncsdk-bash

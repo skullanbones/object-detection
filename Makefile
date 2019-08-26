@@ -111,6 +111,9 @@ docker-jupyter:
 		--name tensorflow-jupyter-notebooks \
 		tensorflow/tensorflow:nightly-gpu
 
+jupyter: venv
+	./venv/bin/jupyter notebook
+
 docker-stop:
 	docker stop  tensorflow-jupyter-notebooks
 
