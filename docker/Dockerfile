@@ -87,5 +87,3 @@ ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 
 # Tensorboard
 EXPOSE 6006/tcp
-# jupyter
-EXPOSE 8889/tcp
