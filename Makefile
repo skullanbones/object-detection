@@ -111,12 +111,18 @@ docker-jupyter:
 		--name tensorflow-jupyter-notebooks \
 		tensorflow/tensorflow:nightly-gpu
 
+jupyter: venv
+	./venv/bin/jupyter notebook
+
 docker-stop:
 	docker stop  tensorflow-jupyter-notebooks
 
-venv:
-	virtualenv -p python$(PYTHON_VERSION) $@
-	./venv/bin/pip install -r requirements_cpu.txt
+venv: venv/bin/activate
+
+venv/bin/activate: requirements_cpu.txt
+	test -d venv || virtualenv -p python$(PYTHON_VERSION) venv
+	. venv/bin/activate; pip install -Ur requirements_cpu.txt
+	touch venv/bin/activate
 
 clean:
 	rm -rf env/
