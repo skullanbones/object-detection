@@ -1,5 +1,5 @@
 # Computer vision with AI
-This repo contains a docker image with the purpose of process isolation for training and running tensorflow calculations on your NVIDIA GPU hardware isolating NVIDIA CUDA. This will simplify the installation and save considerable amount of time instead of having to install it on your host. It's also easy to reuse this image on AWS to simplify training on new AWS instances. Check requirements for what is required by the host.
+This repo contains a docker image with the purpose of process isolation for training and running tensorflow calculations on your NVIDIA GPU hardware isolating NVIDIA CUDA. This will simplify the installation and save considerable amount of time instead of having to install it on your host. It's also easy to reuse this image on AWS to simplify training on new AWS instances. Check requirements for what is required by the host. Please check the `TRAINING.md` to get started with training.
 
 There is also a docker image available for NCS1 development.
 
@@ -13,16 +13,18 @@ There is also a docker image available for NCS1 development.
 
 
 ## Tensorflow object detection
+Tensorflow can be used on both CPU & GPU where inference (running pre-trained model) is recommended to run on the CPU (because of overhead of starting GPU sessions) while training on GPU will outperform the CPU depending on your hardware spec.
+
 ![](images/tensorflow_logo.png)
 
-### Run Tensorflow Object Detection API Demo
+### Run Tensorflow Object Detection API Demo on CPU (inference)
 First clone models:
 ```Bash
 git clone https://github.com/tensorflow/models.git          [1]
 ```
-in this folder which is mounted into docker when running the tensorflow GPU container by:
+in this folder. Start a jupyter notebook on CPU by:
 ```Bash
-docker-compose up jupyter
+make jupyter
 ```
 which starts up jupyter notebooks session in object-detection folder. You can access it via `http://127.0.0.1:8888` and a token which is shown in the shell. Now you are ready to run the demo example:
 ```Bash
@@ -32,10 +34,7 @@ When successfull you will get something like:
 
 ![](images/tensorflow_jupyter_demo.png)
 
-Top stop the container type `Ctrl-C` or in another shell type:
-```Bash
-docker-compose stop jupyter
-```
+Top stop the demo type `Ctrl-C`.
 
 ### Install NVIDIA docker
 Check this [link](https://github.com/NVIDIA/nvidia-docker) on how to install *NVIDIA Container Runtime for Docker*.
@@ -66,7 +65,7 @@ Thu Nov 15 10:20:49 2018
 This image explains it all:
 ![](images/nvidia_docker.png)
 
-### Specialized images
+### Specialized images for training
 In order to do GPU accelerated calculations based on the NVIDIA cuDNN and tensorflow
 use the image `heliconwave/object-detection`. You can build it via:
 ```Bash
@@ -92,6 +91,8 @@ where docker is the user for your docker deamon, which should not be root follow
 
 
 ### Examples
+Please check the `TRAINING.md` on how to start using the docker image for training. 
+
 #### GPU
 First make sure you have a NVIDIA graphic card to be able to run these examples:
 ```
