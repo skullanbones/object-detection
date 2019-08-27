@@ -34,7 +34,7 @@ When successfull you will get something like:
 
 ![](images/tensorflow_jupyter_demo.png)
 
-Top stop the demo type `Ctrl-C`.
+To stop the demo type `Ctrl-C`.
 
 ### Install NVIDIA docker
 Check this [link](https://github.com/NVIDIA/nvidia-docker) on how to install *NVIDIA Container Runtime for Docker*.
