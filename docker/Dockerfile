@@ -26,7 +26,9 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
     unzip \
     less \
     sudo \
-    iputils-ping
+    iputils-ping \
+    sox \
+    libsndfile1
 
 
 ## Python base 3

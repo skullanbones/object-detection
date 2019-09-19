@@ -38,3 +38,8 @@ werkzeug>=0.15.5
 jupyter==1.0.0
 Keras==2.1.6
 scikit-learn==0.19.1
+# FOR LID
+soundfile==0.10.2
+imageio==2.3.0
+speechpy==2.2
+audio_toolbox==0.1
