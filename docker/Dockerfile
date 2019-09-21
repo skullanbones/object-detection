@@ -28,7 +28,8 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
     sudo \
     iputils-ping \
     sox \
-    libsndfile1
+    libsndfile1 \
+    flac
 
 
 ## Python base 3
