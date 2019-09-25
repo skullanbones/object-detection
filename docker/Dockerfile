@@ -26,7 +26,10 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
     unzip \
     less \
     sudo \
-    iputils-ping
+    iputils-ping \
+    sox \
+    libsndfile1 \
+    flac
 
 
 ## Python base 3
@@ -47,20 +50,6 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
     cuda-curand-10-0 \
     cuda-cusparse-10-0
 
-## Python packages 
-# TODO use requirements_gpu.txt
-RUN pip3 install --upgrade pip
-RUN pip3 install --upgrade setuptools
-RUN pip3 install opencv-python
-RUN pip3 install utils
-RUN pip3 install Pillow lxml six
-RUN pip3 install tensorflow-gpu==1.14.0
-RUN pip3 install matplotlib
-RUN pip3 install pandas
-RUN pip3 install cython 
-RUN pip3 install pycocotools
-RUN pip3 install jupyter
-
 # Install protocol buffers tool
 RUN curl -L -o protoc-3.6.1-linux-x86_64.zip https://github.com/google/protobuf/releases/download/v3.6.1/protoc-3.6.1-linux-x86_64.zip
 RUN unzip protoc-3.6.1-linux-x86_64.zip -d protoc3
@@ -76,6 +65,13 @@ RUN echo "root:Docker!" | chpasswd
 ENV LANG=en_US.UTF-8
 RUN export LC_ALL="en_US.UTF-8"
 RUN export LC_CTYPE="en_US.UTF-8"
+
+## Python packages 
+
+RUN pip3 install --upgrade pip
+RUN pip3 install --upgrade setuptools
+COPY requirements_gpu.txt /tmp
+RUN pip3 install -r /tmp/requirements_gpu.txt
 
 # Entrypoint
 COPY ./entrypoint.sh /usr/local/bin/entrypoint.sh
