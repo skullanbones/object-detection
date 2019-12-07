@@ -9,6 +9,8 @@ USER=docker
 
 echo "Starting with USER: $USER and UID : $USER_ID"
 useradd --shell /bin/bash -u $USER_ID -o -c "" -m "$USER"
+echo "docker:Docker!" | chpasswd
+sudo usermod -aG sudo docker
 export HOME=/home/$USER
 
 export LC_ALL=C
