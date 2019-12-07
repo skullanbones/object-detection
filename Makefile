@@ -3,7 +3,10 @@
 #
 
 # Get variables
-include Makefile.variables
+DOCKER_IMAGE_NAME=heliconwave/object-detection
+DOCKER_IMAGE_VER=v10
+DOCKER_IMAGE_NCSDK=heliconwave/ncsdk
+DOCKER_IMAGE_VER_NCSDK=v2
 
 ## Project
 COMPONENT_NAME ?= object-detection
@@ -52,16 +55,16 @@ flake:
 # Build docker image
 docker-image:
 	docker build \
-		--file=$(DOCKERDIR)/Dockerfile \
+		--file=$(DOCKERDIR)/cuda/Dockerfile \
 		--tag=$(DOCKER_IMAGE_NAME):$(DOCKER_IMAGE_VER) \
-		--tag=$(DOCKER_IMAGE_NAME):latest docker/
+		--tag=$(DOCKER_IMAGE_NAME):latest docker/cuda
 
 
 docker-image-ncsdk:
 	docker build \
-		--file=$(DOCKERDIR)/Dockerfile.NCSDK \
+		--file=$(DOCKERDIR)/ncsdk/Dockerfile \
 		--tag=$(DOCKER_IMAGE_NCSDK):$(DOCKER_IMAGE_VER_NCSDK) \
-		--tag=$(DOCKER_IMAGE_NCSDK):latest docker/
+		--tag=$(DOCKER_IMAGE_NCSDK):latest docker/ncsdk
 
 
 # start tty session inside docker container
