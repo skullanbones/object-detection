@@ -4,7 +4,7 @@
 
 # Get variables
 DOCKER_IMAGE_NAME=heliconwave/object-detection
-DOCKER_IMAGE_VER=v10
+DOCKER_IMAGE_VER=v11
 DOCKER_IMAGE_NCSDK=heliconwave/ncsdk
 DOCKER_IMAGE_VER_NCSDK=v2
 
