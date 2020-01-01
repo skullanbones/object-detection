@@ -58,6 +58,7 @@ def load_model():
   label_map = label_map_util.load_labelmap(PATH_TO_LABELS)
   categories = label_map_util.convert_label_map_to_categories(label_map, max_num_classes=NUM_CLASSES, use_display_name=True)
   category_index = label_map_util.create_category_index(categories)
+  return detection_graph, category_index
 
 
 # ## Helper code
@@ -123,14 +124,7 @@ def get_display_string(
 
 
 # Detection
-def run_detection(video_files):
-  # If you want to test the code with your images, just add path to the images to the TEST_IMAGE_PATHS.
-  PATH_TO_TEST_IMAGES_DIR = 'test_images'
-  TEST_IMAGE_PATHS = [ os.path.join(PATH_TO_TEST_IMAGES_DIR, 'image{}.jpg'.format(i)) for i in range(1, 3) ]
-  
-  # Size, in inches, of the output images.
-  IMAGE_SIZE = (12, 8)
-  
+def run_detection(video_files, detection_graph, category_index):
   for videofile in video_files:
     print("processing file {0}".format(videofile))
   
@@ -217,7 +211,8 @@ def parse_arguments(lista):
   args = parser.parse_args(lista)
   # Video assets to stream
   video_files = ['test.mp4']
-  load_model()
+  detection_graph, category_index = load_model()
+  run_detection([args.input], detection_graph, category_index)
 
 
 def main():
