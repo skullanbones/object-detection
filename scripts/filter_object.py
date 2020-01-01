@@ -91,6 +91,7 @@ def get_display_string(
   box_to_instance_boundaries_map = {}
   box_to_keypoints_map = collections.defaultdict(list)
   strings = []
+  objects = []
   if not max_boxes_to_draw:
     max_boxes_to_draw = boxes.shape[0]
   for i in range(min(max_boxes_to_draw, boxes.shape[0])):
@@ -105,6 +106,7 @@ def get_display_string(
       if scores is None:
         box_to_color_map[box] = groundtruth_box_visualization_color
       else:
+        display_dic = {}
         display_str = ''
         if not skip_labels:
           if not agnostic_mode:
@@ -115,11 +117,14 @@ def get_display_string(
             display_str = str(class_name)
         if not skip_scores:
           if not display_str:
+            display_dic[str(class_name)] = format(int(100*scores[i]))
             display_str = '{}%'.format(int(100*scores[i]))
           else:
+            display_dic[display_str] = format(int(100*scores[i]))
             display_str = '{}: {}%'.format(display_str, int(100*scores[i]))
             strings.append(display_str)
-  return strings
+            objects.append(display_dic)
+  return objects
 
 
 
