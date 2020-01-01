@@ -141,8 +141,11 @@ def run_detection(video_files, detection_graph, category_index):
     with detection_graph.as_default():
       with tf.Session(graph=detection_graph) as sess:
         objects = []
-        while True:
+        while(cap.isOpened()):
           ret, image_np = cap.read()
+          # Video ended
+          if not ret:
+            break
           # Expand dimensions since the model expects images to have shape: [1, None, None, 3]
           image_np_expanded = np.expand_dims(image_np, axis=0)
           image_tensor = detection_graph.get_tensor_by_name('image_tensor:0')
