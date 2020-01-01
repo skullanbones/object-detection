@@ -46,8 +46,6 @@ else:
 # 
 # By default we use an "SSD with Mobilenet" model here. See the [detection model zoo](https://github.com/tensorflow/models/blob/master/object_detection/g3doc/detection_model_zoo.md) for a list of other models that can be run out-of-the-box with varying speeds and accuracies.
 
-# In[4]:
-
 def load_model():
   # What model to use / download.
   MODEL_NAME = 'ssd_mobilenet_v1_coco_11_06_2017'
@@ -87,8 +85,6 @@ def load_model():
 
 
 # ## Helper code
-
-# In[8]:
 
 def load_image_into_numpy_array(image):
   (im_width, im_height) = image.size
@@ -210,43 +206,42 @@ def run_detection():
 
 
 def parse_arguments(lista):
-    parser = argparse.ArgumentParser(description='Object boolean filter to find objects in video files.')
-    parser.add_argument(
-        'input',
-        help='a path to a video file')
-    parser.add_argument(
-        '--model',
-        dest='model',
-        help='a path to the pb model file; the default is `model.pb`')
-    parser.add_argument(
-        '--silence-threshold',
-        dest='silence_threshold',
-        type=float,
-        help=("indicates what sample value you should treat as silence; "
-              "the default is `0.5`"))
-    parser.add_argument(
-        '--silence-min-duration',
-        dest='silence_min_duration_sec',
-        type=float,
-        help=("specifies a period of silence that must exist before video is "
-              "not copied any more; the default is `0.1`"))
-    parser.add_argument(
-        '--verbose',
-        dest='verbose',
-        action='store_true',
-        help='print more logs')
+  parser = argparse.ArgumentParser(description='Object boolean filter to find objects in video files.')
+  parser.add_argument(
+    'input',
+    help='a path to a video file')
+  parser.add_argument(
+    '--model',
+    dest='model',
+    help='a path to the pb model file; the default is `model.pb`')
+  parser.add_argument(
+    '--silence-threshold',
+    dest='silence_threshold',
+    type=float,
+    help=("indicates what sample value you should treat as silence; "
+           "the default is `0.5`"))
+  parser.add_argument(
+    '--silence-min-duration',
+    dest='silence_min_duration_sec',
+    type=float,
+    help=("specifies a period of silence that must exist before video is "
+          "not copied any more; the default is `0.1`"))
+  parser.add_argument(
+    '--verbose',
+    dest='verbose',
+    action='store_true',
+    help='print more logs')
+  parser.set_defaults(
+    model='model.pb',
+    silence_min_duration_sec=0.1,
+    silence_threshold=0.5,
+    verbose=False)
 
-    parser.set_defaults(
-        model='model.pb',
-        silence_min_duration_sec=0.1,
-        silence_threshold=0.5,
-        verbose=False)
-
-    args = parser.parse_args(lista)
+  args = parser.parse_args(lista)
 
 
 def main():
-    parse_arguments(sys.argv[1:])
+  parse_arguments(sys.argv[1:])
 
 if __name__ == "__main__":
-    main()
+  main()
