@@ -15,30 +15,6 @@ sys.path.append("..")
 from utils import label_map_util
 from utils import visualization_utils as vis_util
 
-
-## Choose input device or asset
-def has_web_cam(source=0):
-  try:
-    cap = cv2.VideoCapture(source)
-  except cv2.error as e:
-    print('got exception e' + e)
-    return False
-  if cap is None or not cap.isOpened():
-    print('Warning: unable to open video source: ', source)
-    return False
-  return False
-
-
-# Video assets to stream
-video_files = []
-
-if has_web_cam(0):
-  print('Using webcamera.')
-  video_files = [0] # Try enable to use webcamera instead
-else:
-  print('Using test assests.')
-
-
 # # Model preparation 
 
 # ## Variables
@@ -50,7 +26,6 @@ else:
 def load_model():
   # What model to use / download.
   MODEL_NAME = 'ssd_mobilenet_v1_coco_11_06_2017'
-
   MODEL_FILE = MODEL_NAME + '.tar.gz'
   DOWNLOAD_BASE = 'http://download.tensorflow.org/models/object_detection/'
   # Path to frozen detection graph. This is the actual model that is used for the object detection.
@@ -148,7 +123,7 @@ def get_display_string(
 
 
 # Detection
-def run_detection():
+def run_detection(video_files):
   # If you want to test the code with your images, just add path to the images to the TEST_IMAGE_PATHS.
   PATH_TO_TEST_IMAGES_DIR = 'test_images'
   TEST_IMAGE_PATHS = [ os.path.join(PATH_TO_TEST_IMAGES_DIR, 'image{}.jpg'.format(i)) for i in range(1, 3) ]
@@ -214,7 +189,7 @@ def parse_arguments(lista):
   parser.add_argument(
     '--model',
     dest='model',
-    help='a path to the pb model file; the default is `model.pb`')
+    help='a path to the pb model file; the default is `ssd_mobilenet_v1_coco_11_06_2017`')
   parser.add_argument(
     '--silence-threshold',
     dest='silence_threshold',
@@ -232,13 +207,17 @@ def parse_arguments(lista):
     dest='verbose',
     action='store_true',
     help='print more logs')
+
   parser.set_defaults(
-    model='model.pb',
+    model='ssd_mobilenet_v1_coco_11_06_2017',
     silence_min_duration_sec=0.1,
     silence_threshold=0.5,
     verbose=False)
 
   args = parser.parse_args(lista)
+  # Video assets to stream
+  video_files = ['test.mp4']
+  load_model()
 
 
 def main():
