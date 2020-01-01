@@ -175,10 +175,10 @@ def run_detection(video_files, detection_graph, category_index):
             print("scores: {0}".format(display))
   
           cv2.imshow('object detection', cv2.resize(image_np, (800,600)))
-          if cv2.waitKey(25) & 0xFF == ord('n'):
+          if cv2.waitKey(1) & 0xFF == ord('n'):
             cv2.destroyAllWindows()
             break
-          elif cv2.waitKey(25) & 0xFF == ord('q'):
+          elif cv2.waitKey(1) & 0xFF == ord('q'):
             cv2.destroyAllWindows()
             sys.exit()
             break
