@@ -135,6 +135,7 @@ def run_detection(video_files, detection_graph, category_index):
   
     with detection_graph.as_default():
       with tf.Session(graph=detection_graph) as sess:
+        objects = []
         while True:
           ret, image_np = cap.read()
           # Expand dimensions since the model expects images to have shape: [1, None, None, 3]
@@ -173,6 +174,9 @@ def run_detection(video_files, detection_graph, category_index):
             cv2.destroyAllWindows()
             sys.exit()
             break
+          if display:
+            objects.append(display)
+        return objects
 
 
 def parse_arguments(lista):
@@ -212,7 +216,10 @@ def parse_arguments(lista):
   # Video assets to stream
   video_files = ['test.mp4']
   detection_graph, category_index = load_model()
-  run_detection([args.input], detection_graph, category_index)
+  objects = run_detection([args.input], detection_graph, category_index)
+  if objects:
+    print("objects: {0}".format(objects))
+    return objects
 
 
 def main():
