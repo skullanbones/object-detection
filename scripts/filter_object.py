@@ -7,6 +7,7 @@ import tensorflow as tf
 import os.path
 import collections
 import cv2
+import argparse
 
 
 # This is needed since the notebook is stored in the object_detection folder.
