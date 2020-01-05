@@ -4,7 +4,7 @@
 
 # Get variables
 DOCKER_IMAGE_NAME=heliconwave/object-detection
-DOCKER_IMAGE_VER=v11
+DOCKER_IMAGE_VER=v12
 DOCKER_IMAGE_NCSDK=heliconwave/ncsdk
 DOCKER_IMAGE_VER_NCSDK=v2
 
@@ -82,8 +82,9 @@ docker-bash:
 		--env TERM=xterm-256color \
 		--privileged \
 		--volume /tmp/.X11-unix:/tmp/.X11-unix:ro \
-		--volume=$$(pwd):/tmp \
+		--volume $$(pwd):/tmp \
 		--volume /dev/video0:/dev/video0 \
+		--workdir=/tmp \
 		$(DOCKER_IMAGE_NAME):$(DOCKER_IMAGE_VER) /bin/bash
 
 docker-bash-ncsdk:
