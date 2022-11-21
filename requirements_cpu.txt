@@ -28,7 +28,7 @@ pytz==2018.7
 six==1.11.0
 subprocess32==3.5.3
 tensorboard==1.14.0
-tensorflow==1.14.0
+tensorflow==2.9.3
 termcolor==1.1.0
 werkzeug>=0.15.3
 pandas==0.24.2
